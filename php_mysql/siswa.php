@@ -18,11 +18,12 @@
             <th>JENIS KELAMIN</th>
             <th>ALAMAT</th>
             <th>NO HP</th>
+            <th>Aksi</th>
         </tr>
         <?php
         include "koneksi.php";
         if(isset($_GET['cari'])){
-            $cari = $_GET['cari'];
+            $cari = mysqli_real_escape_string($koneksi, $_GET['cari']);
             $sql = "SELECT*FROM siswa WHERE nisn= '$cari' OR nama= '$cari'";
         }else{
             $sql = "SELECT*FROM siswa";
@@ -39,6 +40,11 @@
                 <td><?=$data['jk'] == 'L' ? 'Laki-Laki' : 'Perempuan' ?></td>
                 <td><?=$data['alamat'] ?></td>
                 <td><?=$data['nohp'] ?></td>
+                <td>
+                    <a href="delete_siswa.php?nisn=<?=$data['nisn'] ?>">
+                        <button>Hapus</button>
+                    </a>
+                </td>
             </tr>
             <?php
         }
