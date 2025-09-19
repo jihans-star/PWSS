@@ -42,7 +42,10 @@
                 <td><?=$data['nohp'] ?></td>
                 <td>
                     <a href="delete_siswa.php?nisn=<?=$data['nisn'] ?>">
-                        <button>Hapus</button>
+                    <button>Hapus</button>
+                    </a>
+                    <a href="edit_siswa.php?nisn=<?=$data['nisn'] ?>">
+                    <button>Edit</button>
                     </a>
                 </td>
             </tr>
