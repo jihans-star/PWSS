@@ -37,7 +37,7 @@
             <tr>
                 <td>Upload Foto</td>
                 <td>
-                    <input type="file" name="foto" id="">
+                    <input type="file" name="foto" id="" accept="image/*">
                 </td>
             </tr>
             <tr>
@@ -57,9 +57,11 @@
 
         $foto = $_FILES['foto'];
         if($foto['size'] < 3000000){
-            $file_name = $foto['name'];
-            if(move_uploaded_file($foto['tmp_name'], 'foto/'.$file_name)){
-                $sql = "INSERT INTO siswa VALUES('$nisn', '$nama', '$jk', '$alamat', '$nohp','$file_name')";
+            $file_name = basename($foto['name']);
+            $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+            $new_fle_name = uniqid()."_".time().".".$file_extension;
+            if(move_uploaded_file($foto['tmp_name'], 'foto/'.$new_fle_name)){
+                $sql = "INSERT INTO siswa VALUES('$nisn', '$nama', '$jk', '$alamat', '$nohp','$new_fle_name')";
             }else{
                 $sql = "INSERT INTO siswa VALUES('$nisn', '$nama', '$jk', '$alamat', '$nohp','-')";
             }
