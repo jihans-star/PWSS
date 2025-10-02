@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Create Siswa</h1>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <table>
             <tr>
                 <td>NISN</td>
@@ -35,6 +35,12 @@
                 <td><input type="text" name="nohp" id=""></td>
             </tr>
             <tr>
+                <td>Upload Foto</td>
+                <td>
+                    <input type="file" name="foto" id="">
+                </td>
+            </tr>
+            <tr>
                 <td><input type="submit" value="SIMPAN" name="submit"></td>
             </tr>
         </table>
@@ -49,13 +55,23 @@
         $alamat = mysqli_real_escape_string($koneksi, $_POST['alamat']);
         $nohp = mysqli_real_escape_string($koneksi, $_POST['nohp']);
 
-        $sql = "INSERT INTO siswa VALUES('$nisn', '$nama', '$jk', '$alamat', '$nohp')";
-        $query = mysqli_query($koneksi, $sql);
-        if($query){
-            echo "data berhasil ditambah ";
-            ?>
-            <a href="siswa.php">Lihat Data</a>
-            <?php
+        $foto = $_FILES['foto'];
+        if($foto['size'] < 3000000){
+            $file_name = $foto['name'];
+            if(move_uploaded_file($foto['tmp_name'], 'foto/'.$file_name)){
+                $sql = "INSERT INTO siswa VALUES('$nisn', '$nama', '$jk', '$alamat', '$nohp','$file_name')";
+            }else{
+                $sql = "INSERT INTO siswa VALUES('$nisn', '$nama', '$jk', '$alamat', '$nohp','-')";
+            }
+            $query = mysqli_query($koneksi, $sql);
+            if($query){
+                echo "data berhasil ditambah ";
+                ?>
+                <a href="siswa.php">Lihat Data</a>
+                <?php
+            }
+        }else{
+            echo "ukuran foto terlalu besar";
         }
     }
     ?>
