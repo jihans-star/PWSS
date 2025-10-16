@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(!isset($_SESSION['username'])){
+    header('location:login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +12,8 @@
     <title>Siswa</title>
 </head>
 <body>
+    <h1>Selamat Datang <?= $_SESSION['nama']?></h1>
+    <a href="logout.php">Logout</a>
     <form action="" method="get">
         <input type="search" name="cari" id=""><input type="submit" value="cari">
     </form>
